@@ -16,6 +16,7 @@ set ruler                   "Displays cursor position on bottom right of screen
 set statusline=%<%f\ %h%m%r%=%{fugitive#statusline()}\ \ %-14.(%l,%c%V%)\ %P
 let g:buftabs_only_basename=1
 let g:buftabs_marker_modified = "+"
+:au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
 
 "------  Behavior  ------
 set tabstop=4               "tab = 4 spaces
@@ -44,7 +45,7 @@ set ignorecase              "Case Insensitive Searching
 set smartcase               "Lowercase = case insensitive, any uppercase = case sensitive
 set hlsearch                "Highlight all search results
 "Following line clears the search highlights when pressing Lb
-nnoremap <silent> <leader>b :nohlsearch<CR>
+nnoremap <leader>b :nohlsearch<CR>
 " http://www.vim.org/scripts/script.php?script_id=2572
 noremap <leader>a :Ack 
 noremap <leader>A <C-w>j<C-w>c<C-w>l
@@ -58,6 +59,7 @@ vmap S :s//g<LEFT><LEFT>
 "------  NERDTree Options  ------
 let NERDTreeIgnore=['CVS','\.dSYM$']
 let NERDTreeChDirMode=2     "setting root dir in NT also sets VIM's cd
+let NERDTreeQuitOnOpen = 1
 noremap <silent> <Leader>n :NERDTreeToggle<CR>
 " These prevent accidentally loading files while in the NERDTree panel
 autocmd FileType nerdtree noremap <buffer> <c-left> <nop>
@@ -66,6 +68,17 @@ autocmd FileType nerdtree noremap <buffer> <c-right> <nop>
 autocmd FileType nerdtree noremap <buffer> <c-l> <nop>
 autocmd vimenter * if !argc() | NERDTree | endif " Open NERDTree if we're simply launching vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif " close if only nerdtree open
+
+" TagList
+let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
+noremap <silent> <Leader>ll :TlistToggle<CR>
+let Tlist_Exit_OnlyWindow = 1     " exit if taglist is last window open
+let Tlist_Show_One_File = 1       " Only show tags for current buffer
+let Tlist_Enable_Fold_Column = 0  " no fold column (only showing one file)
+let Tlist_Use_Horiz_Window = 1
+let Tlist_WinHeight = 16
+let Tlist_GainFocus_On_ToggleOpen = 1
+let Tlist_Close_On_Select = 1
 
 "------  Tagbar Options  ------
 " http://adamyoung.net/Exuberant-Ctags-OS-X
@@ -150,9 +163,6 @@ map <Leader>c "+y
 
 " Deletes trailing space in file upon write
 " autocmd BufWritePre * :%s/\s\+$//e
-
-" Accidentally pressing Shift K will no longer open stupid man entry
-noremap K <nop>
 
 map <Leader>? :Helptags<CR>
 
