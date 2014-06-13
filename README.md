@@ -75,7 +75,7 @@ Run these commands in your terminal to fully install this vim setup within OS X.
 tweaking to get it working under Linux.
 
     cd ~
-    git clone git://github.com/coly/vimrc.git .vim
+    git clone git://github.com/colyii/vimrc.git .vim
     ln -s ~/.vim/vimrc ~/.vimrc && ln -s ~/.vim/gvimrc ~/.gvimrc
 
 ## Screenshots
